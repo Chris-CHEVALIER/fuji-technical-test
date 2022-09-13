@@ -1,25 +1,39 @@
 import React, { useEffect, useState } from 'react'
-import { ethers } from 'ethers'
-import MeowCard from './MeowCard'
-import { Alert, CircularProgress } from '@mui/material'
 
+import { ContractInterface, ethers } from 'ethers'
+
+import { Alert, CircularProgress, Grid, Typography } from '@mui/material'
+
+import MeowCard from './MeowCard'
+import { Box } from '@mui/system'
+
+// TS types
 type MeowListProps = {
-  provider: any
+  provider: ethers.providers.Web3Provider
   contractAddress: string
-  meowAbi: any
+  meowAbi: ContractInterface
 }
 
-export default function MeowList (props: MeowListProps) {
-  const [meows, setMeows] = useState<
-    { timestamp: { _hex: string }; message: string; author: string }[]
-  >([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+type Meow = {
+  message: string
+  timestamp: { _hex: string }
+  author: string
+}
 
+// Display all transactions as a list
+export default function MeowList (props: MeowListProps) {
+  const [meows, setMeows] = useState<Meow[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string>('')
+
+  // Fetch meows after the 1st render - display loading indicator before
   useEffect(() => {
     fetchMeows()
+    setInterval(() => fetchMeows(), 10000)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // Get meows with smart contract informations - call 'getAllMeows()' method from contract
   async function fetchMeows () {
     const contract = new ethers.Contract(
       props.contractAddress,
@@ -27,45 +41,57 @@ export default function MeowList (props: MeowListProps) {
       props.provider
     )
     try {
-      const meows: {
-        timestamp: { _hex: string }
-        message: string
-        author: string
-      }[] = await contract.getAllMeows()
+      const meows: Meow[] = await contract.getAllMeows()
       setMeows(meows)
       setLoading(false)
     } catch (err) {
+      // Handle error process
       console.error(err)
       if (typeof err === 'string') {
         setError(err)
       } else if (err instanceof Error) {
         setError(err.message)
       }
+      setLoading(false)
     }
   }
 
   return (
     <>
-      {loading && <CircularProgress />}
+      <Typography variant='h4' color='primary' align='center'>
+        Meows
+      </Typography>
+
+      {loading && (
+        <CircularProgress sx={{ display: 'flex', justifyContent: 'center' }} />
+      )}
       {error && (
         <Alert severity='error'>
           <>
-            This is an error alert — check it out: <br />
-            {{ error }}
+            An error occured: <br />
+            {error}
           </>
         </Alert>
       )}
-      {meows.map((meow: any) => (
-        <MeowCard
-          key={meow.timestamp}
-          message={meow.message}
-          provider={props.provider}
-          authorAddress={meow.author}
-          date={new Date(
-            parseInt(meow.timestamp._hex, 16) * 1000
-          ).toUTCString()}
-        />
-      ))}
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'space-evenly'
+        }}
+      >
+        {meows.map((meow: Meow, i) => (
+          <MeowCard
+            key={i}
+            message={meow.message}
+            provider={props.provider}
+            authorAddress={meow.author}
+            date={new Date(
+              parseInt(meow.timestamp._hex, 16) * 1000
+            ).toUTCString()}
+          />
+        ))}
+      </Box>
     </>
   )
 }

@@ -1,19 +1,23 @@
-import { Alert, Button, TextField } from '@mui/material'
-import { ethers } from 'ethers'
 import React, { useState } from 'react'
 import { Resolver, useForm } from 'react-hook-form'
+
+import { ContractInterface, ethers } from 'ethers'
+
+import { Alert, Box, Button, TextField, Typography } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
 
+// TS types
 type FormValues = {
   message: string
 }
 
 type MeowFormProps = {
-  provider: any
+  provider: ethers.providers.Web3Provider
   contractAddress: string
-  meowAbi: any
+  meowAbi: ContractInterface
 }
 
+// Form to send a meow message handled with "react-hook-form" library
 export default function MeowForm (props: MeowFormProps) {
   const [error, setError] = useState('')
 
@@ -34,18 +38,22 @@ export default function MeowForm (props: MeowFormProps) {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm<FormValues>({ resolver })
 
-  const onSubmit = (data: any) => {
+  // On form submit, the transaction is sended and handled by wallet (MetaMask or other)
+  const onSubmit = (data: FormValues) => {
     const contract = new ethers.Contract(
       props.contractAddress,
       props.meowAbi,
-      props.provider.getSigner()
+      props.provider.getSigner() // The contract need signer to handle transaction
     )
     try {
-      contract.sayMeow(data.message)
+      contract.sayMeow(data.message) // Send transaction
+      reset()
     } catch (err) {
+      // Handle error process
       console.log(err)
       if (typeof err === 'string') {
         setError(err)
@@ -60,11 +68,14 @@ export default function MeowForm (props: MeowFormProps) {
       {error && (
         <Alert severity='error'>
           <>
-            This is an error alert — check it out: <br />
-            {{ error }}
+            An error occured: <br />
+            {error}
           </>
         </Alert>
       )}
+      <Typography variant='h4' color='primary' align='center'>
+        Send a meow
+      </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
           id='message'
@@ -73,18 +84,20 @@ export default function MeowForm (props: MeowFormProps) {
           rows={4}
           {...register('message')}
           placeholder='Type your meow message here...'
-          sx={{ m: 1 }}
+          sx={{ minWidth: 270 }}
         />
         <br />
-        <Button
-          type='submit'
-          variant='contained'
-          color='primary'
-          endIcon={<SendIcon />}
-          sx={{ m: 1 }}
-        >
-          Send meow
-        </Button>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Button
+            type='submit'
+            variant='outlined'
+            color='primary'
+            endIcon={<SendIcon />}
+            sx={{ mt: 1 }}
+          >
+            Send meow
+          </Button>
+        </Box>
       </form>
     </>
   )
