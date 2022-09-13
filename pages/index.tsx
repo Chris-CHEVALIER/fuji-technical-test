@@ -13,6 +13,7 @@ import { Alert, Box, Divider } from '@mui/material'
 import MeowForm from '../components/MeowForm'
 import MeowList from '../components/MeowList'
 import MeowAbi from '../contracts/MeowAbi.json'
+import Web3 from 'web3'
 
 // Handle MUI theme for primary color
 const theme = createTheme({
@@ -36,7 +37,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     try {
       const provider: ethers.providers.Web3Provider = new ethers.providers.Web3Provider(
-        window.ethereum
+        Web3.givenProvider
       )
       setProvider(provider)
     } catch (err) {
