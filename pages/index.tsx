@@ -36,6 +36,7 @@ const Home: NextPage = () => {
   // Handle ethers JS provider in 'useEffect()' to have access to 'window' with NextJS
   useEffect(() => {
     try {
+      // const provider: ethers.providers.JsonRpcProvider = new ethers.providers.JsonRpcProvider("https://goerli.infura.io/v3/d8a0eb4098e54845b68f2d9cb5a43c01");
       const provider: ethers.providers.Web3Provider = new ethers.providers.Web3Provider(
         Web3.givenProvider
       )

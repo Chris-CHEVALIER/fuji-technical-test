@@ -63,7 +63,9 @@ export default function MeowList (props: MeowListProps) {
       </Typography>
 
       {loading && (
-        <CircularProgress sx={{ display: 'flex', justifyContent: 'center' }} />
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <CircularProgress />
+        </Box>
       )}
       {error && (
         <Alert severity='error'>
