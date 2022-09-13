@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { ContractInterface, ethers } from 'ethers'
 
-import { Alert, CircularProgress, Grid, Typography } from '@mui/material'
+import { Alert, CircularProgress, Typography } from '@mui/material'
 
 import MeowCard from './MeowCard'
 import { Box } from '@mui/system'

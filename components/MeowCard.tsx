@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { ethers } from 'ethers'
 
@@ -8,7 +8,7 @@ import { Card, CardContent, Typography } from '@mui/material'
 type MeowCardProps = {
   message: string
   authorAddress: string
-  provider: ethers.providers.BaseProvider
+  provider: ethers.providers.Web3Provider
   key: Number
   date: string
 }
@@ -21,7 +21,9 @@ export default function MeowCard (props: MeowCardProps) {
 
   // Can't fetch ENS - 'lookupAddress()' method returns 'null'...
   /* async function fetchEns () {
-    const ens: string | null = await props.provider.lookupAddress(props.authorAddress)
+    const ens: string | null = await props.provider.lookupAddress(
+      props.authorAddress
+    )
     console.log(ens)
   } */
 
