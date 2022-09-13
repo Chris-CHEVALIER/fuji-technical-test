@@ -8,7 +8,7 @@ import { ethers } from 'ethers'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { orange } from '@mui/material/colors'
-import { Alert, Box, Divider } from '@mui/material'
+import { Alert, Box, Divider, Typography } from '@mui/material'
 
 import MeowForm from '../components/MeowForm'
 import MeowList from '../components/MeowList'
@@ -61,7 +61,17 @@ const Home: NextPage = () => {
         <link rel='icon' href='/static/favicon.ico' />
       </Head>
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-around', my: 3 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          my: 1
+        }}
+      >
+        <Typography sx={{ fontSize: 18, fontWeight: 'bold' }} color='primary'>
+          Please connect your wallet first!
+        </Typography>
         <ConnectButton />
       </Box>
       {error && (
