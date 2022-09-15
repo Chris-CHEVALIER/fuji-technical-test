@@ -39,7 +39,7 @@ export default function MeowCard (props: MeowCardProps) {
           {props.authorAddress}
         </Typography>
 
-        <Typography noWrap sx={{ fontSize: 16 }} variant='body2'>
+        <Typography sx={{ fontSize: 16 }} variant='body2'>
           {props.message}
         </Typography>
 

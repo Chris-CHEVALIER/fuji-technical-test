@@ -35,12 +35,13 @@ export default function MeowList (props: MeowListProps) {
 
   // Get meows with smart contract informations - call 'getAllMeows()' method from contract
   async function fetchMeows () {
-    const contract = new ethers.Contract(
-      props.contractAddress,
-      props.meowAbi,
-      props.provider
-    )
     try {
+      const contract = new ethers.Contract(
+        props.contractAddress,
+        props.meowAbi,
+        props.provider
+      )
+      // await props.provider.send('eth_requestAccounts', []);
       const meows: Meow[] = await contract.getAllMeows()
       setMeows(meows)
       setLoading(false)

@@ -71,7 +71,7 @@ const Home: NextPage = () => {
         }}
       >
         <Typography sx={{ fontSize: 18, fontWeight: 'bold' }} color='primary'>
-          Please connect your wallet first!
+          Please connect your wallet first
         </Typography>
         <ConnectButton />
       </Box>
