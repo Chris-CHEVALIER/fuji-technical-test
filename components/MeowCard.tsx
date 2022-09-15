@@ -29,30 +29,45 @@ export default function MeowCard (props: MeowCardProps) {
   } */
 
   return (
-    <Card sx={{ mb: 2, maxWidth: 270 }}>
-      <CardContent>
-        <Typography
-          noWrap
-          sx={{ fontSize: 14 }}
-          color='text.secondary'
-          gutterBottom
-        >
-          {props.authorAddress}
-        </Typography>
+    <a
+      target='_blank'
+      rel="noreferrer"
+      href={`https://goerli.etherscan.io/address/${props.authorAddress}`}
+    >
+      <Card
+        sx={{
+          mb: 2,
+          maxWidth: 270,
+          transition: 'transform 0.125s ease',
+          '&:hover': { transform: 'scale3d(1.03, 1.03, 1)' },
+          borderRadius: '15px',
+          boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)"
+        }}
+      >
+        <CardContent>
+          <Typography
+            noWrap
+            sx={{ fontSize: 14 }}
+            color='text.secondary'
+            gutterBottom
+          >
+            {props.authorAddress}
+          </Typography>
 
-        <Typography sx={{ fontSize: 16 }} variant='body2'>
-          {props.message}
-        </Typography>
+          <Typography sx={{ fontSize: 16 }} variant='body2'>
+            {props.message}
+          </Typography>
 
-        <Typography
-          noWrap
-          sx={{ fontSize: 12 }}
-          color='text.secondary'
-          gutterBottom
-        >
-          {props.date}
-        </Typography>
-      </CardContent>
-    </Card>
+          <Typography
+            noWrap
+            sx={{ fontSize: 12 }}
+            color='text.secondary'
+            gutterBottom
+          >
+            {props.date}
+          </Typography>
+        </CardContent>
+      </Card>
+    </a>
   )
 }

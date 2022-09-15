@@ -7,8 +7,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { ethers } from 'ethers'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { orange } from '@mui/material/colors'
-import { Alert, Box, Divider, Typography } from '@mui/material'
+import { Alert, Box, Divider } from '@mui/material'
 
 import MeowForm from '../components/MeowForm'
 import MeowList from '../components/MeowList'
@@ -19,7 +18,7 @@ import Web3 from 'web3'
 const theme = createTheme({
   palette: {
     primary: {
-      main: orange[500]
+      main: '#3574F4'
     }
   }
 })
@@ -69,9 +68,6 @@ const Home: NextPage = () => {
           my: 1
         }}
       >
-        <Typography sx={{ fontSize: 18, fontWeight: 'bold' }} color='primary'>
-          Please connect your wallet first
-        </Typography>
         <ConnectButton />
       </Box>
       {error && (
@@ -103,7 +99,8 @@ const Home: NextPage = () => {
               width: '90%',
               borderWidth: 2,
               m: 2,
-              display: { xs: 'block', md: 'none' }
+              display: { xs: 'block', md: 'none' },
+              backgroundColor: "#3574F4"
             }}
           />
           <Box sx={{ width: '40%' }}>

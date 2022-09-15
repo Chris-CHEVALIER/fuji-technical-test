@@ -3,8 +3,15 @@ import { Resolver, useForm } from 'react-hook-form'
 
 import { ContractInterface, ethers } from 'ethers'
 
-import { Alert, Box, Button, TextField, Typography } from '@mui/material'
-import SendIcon from '@mui/icons-material/Send'
+import {
+  Alert,
+  Box,
+  Button,
+  TextField,
+  Typography,
+  withStyles
+} from '@mui/material'
+import PetsIcon from '@mui/icons-material/Pets'
 
 // TS types
 type FormValues = {
@@ -112,10 +119,18 @@ export default function MeowForm (props: MeowFormProps) {
           id='message'
           label='Meow message'
           multiline
+          variant='outlined'
           rows={4}
           {...register('message')}
           placeholder='Type your meow message here...'
-          sx={{ minWidth: 270 }}
+          sx={{
+            minWidth: 270,
+            boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+            '& fieldset': {
+              borderRadius: '15px',
+              borderColor: '#3574F4'
+            }
+          }}
         />
         {errors.message && (
           <Alert severity='error'>The meow message is required</Alert>
@@ -124,10 +139,24 @@ export default function MeowForm (props: MeowFormProps) {
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button
             type='submit'
-            variant='outlined'
+            variant='contained'
             color='primary'
-            endIcon={<SendIcon />}
-            sx={{ mt: 1 }}
+            endIcon={<PetsIcon />}
+            sx={{
+              mt: 1,
+              maxWidth: 260,
+              transition: 'transform 0.125s ease',
+              fontWeight: 700,
+              paddingRight: '14px',
+              paddingLeft: '14px',
+              height: '40px',
+              '&:hover': {
+                transform: 'scale3d(1.03, 1.03, 1)',
+                backgroundColor: '#3674F4'
+              },
+              borderRadius: '10px',
+              boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)'
+            }}
             disabled={loading}
           >
             Send meow
