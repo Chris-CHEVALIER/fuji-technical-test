@@ -41,7 +41,8 @@ export default function MeowForm (props: MeowFormProps) {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
+    getValues
   } = useForm<FormValues>({ resolver })
 
   const isConnected = async () => {
@@ -116,6 +117,9 @@ export default function MeowForm (props: MeowFormProps) {
           placeholder='Type your meow message here...'
           sx={{ minWidth: 270 }}
         />
+        {errors.message && (
+          <Alert severity='error'>The meow message is required</Alert>
+        )}
         <br />
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button
