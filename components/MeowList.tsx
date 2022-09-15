@@ -41,7 +41,6 @@ export default function MeowList (props: MeowListProps) {
         props.meowAbi,
         props.provider
       )
-      // await props.provider.send('eth_requestAccounts', []);
       const meows: Meow[] = await contract.getAllMeows()
       setMeows(meows)
       setLoading(false)

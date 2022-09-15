@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { ethers } from 'ethers'
 
@@ -21,7 +21,8 @@ export default function MeowCard (props: MeowCardProps) {
 
   // Can't fetch ENS - 'lookupAddress()' method returns 'null'...
   /* async function fetchEns () {
-    const ens: string | null = await props.provider.lookupAddress(
+    const jsonProvider = new ethers.providers.JsonRpcProvider("https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161");
+    const ens: string | null = await jsonProvider.lookupAddress(
       props.authorAddress
     )
     console.log(ens)
